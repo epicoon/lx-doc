@@ -1,0 +1,17 @@
+name: lx/lx-doc
+
+autoload:
+  psr-4:
+    lx\doc\: ''
+
+service:
+  class: lx\doc\Service
+
+  router:
+    type: map
+    routes:
+      lx-doc: '' #TODO: must be defined
+
+  modules: module
+  models: model
+  modelCrudAdapter: \lx\DbCrudAdapter

@@ -1,0 +1,11 @@
+class: lx\doc\module\docParser\Module
+
+view: view
+viewIndex: _root.php
+
+frontend: frontend
+jsMain: _main.js
+jsBootstrap: _bootstrap.js
+
+respondents:
+  Respondent: backend\Respondent
