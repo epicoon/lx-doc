@@ -1,0 +1,31 @@
+en-EN:
+  package_documentation: Package documentation: 
+  find: Find:
+  php_classes: PHP classes
+
+  interfaces: Interfaces
+  traits: Traits
+  constants: Constants
+  properties: Properties
+  methods: Methods
+
+  class: Class
+  parent_class: Parent class
+  description: Description
+  none: none
+
+ru-RU:
+  package_documentation: Документация пакета: 
+  find: Найти:
+  php_classes: PHP классы
+
+  interfaces: Интерфейсы
+  traits: Трейты
+  constants: Константы
+  properties: Свойства
+  methods: Методы
+
+  class: Класс
+  parent_class: Родительский класс
+  description: Описание
+  none: нет

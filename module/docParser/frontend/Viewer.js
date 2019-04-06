@@ -7,12 +7,17 @@ class Viewer #lx:namespace doc {
 	makeMainTree(data) {
 		var tree = new lx.Tree();
 		var phpClassesNode = tree.add('i18n_php_classes');
+		phpClassesNode.title = #lx:i18n(php_classes);
+
 		for (var className in data.phpClasses) {
 			var classData = data.phpClasses[className];
 
 			if (classData.group) {
 				if (!phpClassesNode.has(classData.group)) {
-					phpClassesNode.add(classData.group);
+					var node = phpClassesNode.add(classData.group);
+
+					//todo - сюда прокинуть перевод названия группы
+					// node.title = 'eee';
 				}
 				phpClassesNode.get(classData.group).add(className);
 			} else {
@@ -58,12 +63,12 @@ class Viewer #lx:namespace doc {
 		>>>
 		*/
 
-		var text = lx.data.i18n.i18n_class + ': ';
+		var text = #lx:i18n(class) + ': ';
 		if (data.isAbstract) text += 'abstract ';
 		text += '<b>' + data.name + '</b>';
-		if (data.parentClass) text += '<br>' + lx.data.i18n.i18n_parent_class + ': ' + #lx:<span.parentClass=({data.parentClass})>;
+		if (data.parentClass) text += '<br>' + #lx:i18n(parent_class) + ': ' + #lx:<span.parentClass=({data.parentClass})>;
 		if (data.doc) {
-			text += '<br><b>' + lx.data.i18n.i18n_description + ':</b>';
+			text += '<br><b>' + #lx:i18n(description) + ':</b>';
 			text += '<br>' + __replaceRN(data.doc);
 		}
 
@@ -79,7 +84,7 @@ class Viewer #lx:namespace doc {
 	/**
 	 *
 	 * */
-	createPartBox(parent, key, callback) {
+	createPartBox(parent, key, text, callback) {
 		var box = new lx.Box({ parent, height: '40px' });
 		// box.fill('lightgray');
 		box.border({color: 'gray'});
@@ -105,7 +110,7 @@ class Viewer #lx:namespace doc {
 		new lx.TextBox({
 			parent: box,
 			key,
-			text: lx.data.i18n[key]
+			text: text
 		});
 
 		box.align({
@@ -126,23 +131,23 @@ class Viewer #lx:namespace doc {
 		this.createClassInfoBox(classBox, data);
 
 		if (!data.interfaces.lxEmpty) {
-			this.createPartBox(classBox, 'i18n_interfaces');
+			this.createPartBox(classBox, 'interfaces', #lx:i18n(interfaces));
 		}
 
 		if (!data.traits.lxEmpty) {
-			this.createPartBox(classBox, 'i18n_traits');
+			this.createPartBox(classBox, 'traits', #lx:i18n(traits));
 		}
 
 		if (!data.constants.lxEmpty) {
-			this.createPartBox(classBox, 'i18n_constants');
+			this.createPartBox(classBox, 'constants', #lx:i18n(constants));
 		}
 
 		if (!data.properties.lxEmpty) {
-			this.createPartBox(classBox, 'i18n_properties', function(){__propertiesToggle(this, data);});
+			this.createPartBox(classBox, 'properties', #lx:i18n(properties), function(){__propertiesToggle(this, data);});
 		}
 
 		if (!data.methods.lxEmpty) {
-			this.createPartBox(classBox, 'i18n_methods', function(){__methodsToggle(this, data);});
+			this.createPartBox(classBox, 'methods', #lx:i18n(methods), function(){__methodsToggle(this, data);});
 		}
 	}
 }
@@ -158,15 +163,15 @@ function __propertiesToggle(but, data) {
 
 		text += '<b>public:</b>';
 		text += data.properties['public'].lxEmpty
-			? ' ' + lx.data.i18n.i18n_none + '<br>'
+			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderProperties('public', data.properties['public']);
 		text += '<br><b>protected:</b>';
 		text += data.properties['protected'].lxEmpty
-			? ' ' + lx.data.i18n.i18n_none + '<br>'
+			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderProperties('protected', data.properties['protected']);
 		text += '<br><b>private:</b>';
 		text += data.properties['private'].lxEmpty
-			? ' ' + lx.data.i18n.i18n_none + '<br>'
+			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderProperties('private', data.properties['private']);
 
 		var dataElem = new lx.Box({
@@ -239,15 +244,15 @@ function __methodsToggle(but, data) {
 
 		text += '<b>public:</b>';
 		text += data.methods['public'].lxEmpty
-			? ' ' + lx.data.i18n.i18n_none + '<br>'
+			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderMethods('public', data);
 		text += '<br><b>protected:</b>';
 		text += data.methods['protected'].lxEmpty
-			? ' ' + lx.data.i18n.i18n_none + '<br>'
+			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderMethods('protected', data);
 		text += '<br><b>private:</b>';
 		text += data.methods['private'].lxEmpty
-			? ' ' + lx.data.i18n.i18n_none + '<br>'
+			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderMethods('private', data);
 
 		var dataElem = new lx.Box({

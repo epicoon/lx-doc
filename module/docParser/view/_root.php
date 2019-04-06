@@ -5,12 +5,6 @@
  * */
 
 use lx\doc\module\docParser\backend\classes\DocParser;
-use lx\doc\module\docParser\backend\classes\Translater;
-
-
-$translater = new Translater();
-lx::$data->i18n = $translater->getLangMap();
-
 
 
 // $packageName = lx::$dialog->params('package');
@@ -28,7 +22,8 @@ $header->fill('lightgray');
 
 new lx\TextBox([
 	'parent' => $header,
-	'key' => 'i18n_package_documentation',
+	'key' => 'packageDocumentation',
+	'text' => \lx::i18n('package_documentation')
 ]);
 
 $dropbox = new lx\Dropbox([
@@ -39,32 +34,11 @@ $dropbox = new lx\Dropbox([
 ]);
 
 $header->align([
-	'subject' => ['i18n_package_documentation', 'packageNames'],
+	'subject' => ['packageDocumentation', 'packageNames'],
 	'horizontal' => lx::LEFT,
 	'vertical' => lx::MIDDLE,
 	'paddingLeft' => '20px',
 ]);
-
-$langs = new lx\Button([
-	'parent' => $header,
-	'key' => 'i18n_languages',
-	'size' => ['15%', '60%'],
-]);
-$langs = new lx\Dropbox([
-	'parent' => $header,
-	'key' => 'lang',
-	'size' => ['10%', '60%'],
-	'options' => $translater->getAvailableLangs(),
-	'value' => 0,
-]);
-$header->align([
-	'subject' => ['i18n_languages', 'lang'],
-	'horizontal' => lx::RIGHT,
-	'vertical' => lx::MIDDLE,
-	'paddingRight' => '20px',
-	'step' => '10px',
-]);
-
 
 
 
@@ -82,7 +56,7 @@ $classes->border(['color' => 'gray']);
 
 $classes->get('body')->gridProportional(['indent' => '10px']);
 $classes->get('body')->begin();
-	(new lx\Box([ 'size' => [3, 1], 'key' => 'i18n_find' ]))->align(lx::CENTER, lx::MIDDLE);
+	(new lx\Box([ 'size' => [3, 1], 'key' => 'find', 'text' => \lx::i18n('find') ]))->align(lx::CENTER, lx::MIDDLE);
 	new lx\Input([ 'size' => [9, 1], 'key' => 'findClass' ]);
 	new lx\TreeBox(['height' => 18, 'key' => 'classesTree']);
 $classes->get('body')->end();
