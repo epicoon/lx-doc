@@ -10,7 +10,7 @@ service:
   router:
     type: map
     routes:
-      lx-doc: '' #TODO: must be defined
+      parser: {module: docParser}
 
   modules: module
   models: model
