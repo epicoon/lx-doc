@@ -1,9 +1,11 @@
 #lx:private;
 
 class Viewer #lx:namespace doc {
-	/**
-	 *
-	 * */
+	constructor(classBox) {
+		this.classBox = classBox;
+		this.docData = {};
+	}
+
 	makeMainTree(data) {
 		var tree = new lx.Tree();
 		var phpClassesNode = tree.add('i18n_php_classes');
@@ -25,15 +27,39 @@ class Viewer #lx:namespace doc {
 			}
 		}
 
-		Module->>classesTree.setData(tree);
+		Plugin->>classesTree.setData(tree);
 	}
 
-	/**
-	 *
-	 * */
-	createClassInfoBox(parent, data) {
+	showClass(className) {
+		this.classBox.clear();
+		var data = this.docData.phpClasses[className];
+
+		this.createClassInfoBox(data);
+
+		if (!data.interfaces.lxEmpty) {
+			this.createPartBox('interfaces', #lx:i18n(interfaces));
+		}
+
+		if (!data.traits.lxEmpty) {
+			this.createPartBox('traits', #lx:i18n(traits));
+		}
+
+		if (!data.constants.lxEmpty) {
+			this.createPartBox('constants', #lx:i18n(constants));
+		}
+
+		if (!data.properties.lxEmpty) {
+			this.createPartBox('properties', #lx:i18n(properties), function(){__propertiesToggle(this, data);});
+		}
+
+		if (!data.methods.lxEmpty) {
+			this.createPartBox('methods', #lx:i18n(methods), function(){__methodsToggle(this, data);});
+		}
+	}
+
+	createClassInfoBox(data) {
 		var e = new lx.Box({
-			parent: classBox
+			parent: this.classBox
 		});
 		e.border({color: 'gray'});
 
@@ -84,19 +110,19 @@ class Viewer #lx:namespace doc {
 	/**
 	 *
 	 * */
-	createPartBox(parent, key, text, callback) {
-		var box = new lx.Box({ parent, height: '40px' });
-		// box.fill('lightgray');
+	createPartBox(key, text, callback) {
+		var box = new lx.Box({ parent:this.classBox, height: '40px' });
 		box.border({color: 'gray'});
 
-		new lx.Rect({
+		var head = new lx.Box({
 			parent: box,
+			geom: true,
 			height: '40px',
 			style: {fill: 'lightgray'}
 		});
 
 		var but = new lx.Box({
-			parent: box,
+			parent: head,
 			key: 'but',
 			text: '+',
 			size: ['20px', '20px'],
@@ -108,47 +134,16 @@ class Viewer #lx:namespace doc {
 		but.isClosed = true;
 
 		new lx.TextBox({
-			parent: box,
+			parent: head,
 			key,
 			text: text
 		});
 
-		box.align({
+		head.align({
 			indent: '10px',
-			subject: ['but', key],
 			horizontal: lx.LEFT,
 			vertical: lx.TOP
 		});
-	}
-
-	/**
-	 *
-	 * */
-	showClass(className) {
-		classBox.clear();
-		var data = docData.phpClasses[className];
-
-		this.createClassInfoBox(classBox, data);
-
-		if (!data.interfaces.lxEmpty) {
-			this.createPartBox(classBox, 'interfaces', #lx:i18n(interfaces));
-		}
-
-		if (!data.traits.lxEmpty) {
-			this.createPartBox(classBox, 'traits', #lx:i18n(traits));
-		}
-
-		if (!data.constants.lxEmpty) {
-			this.createPartBox(classBox, 'constants', #lx:i18n(constants));
-		}
-
-		if (!data.properties.lxEmpty) {
-			this.createPartBox(classBox, 'properties', #lx:i18n(properties), function(){__propertiesToggle(this, data);});
-		}
-
-		if (!data.methods.lxEmpty) {
-			this.createPartBox(classBox, 'methods', #lx:i18n(methods), function(){__methodsToggle(this, data);});
-		}
 	}
 }
 
@@ -157,7 +152,7 @@ class Viewer #lx:namespace doc {
  *****************************************************************************************************************************/
 
 function __propertiesToggle(but, data) {
-	var box = but.parent;
+	var box = but.parent.parent;
 	if (but.isClosed) {
 		var text = '';
 
@@ -238,7 +233,7 @@ function __renderProperties(type, list) {
 }
 
 function __methodsToggle(but, data) {
-	var box = but.parent;
+	var box = but.parent.parent;
 	if (but.isClosed) {
 		var text = '';
 

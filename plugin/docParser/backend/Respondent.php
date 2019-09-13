@@ -1,13 +1,13 @@
 <?php
 
-namespace lx\doc\module\docParser\backend;
+namespace lx\doc\plugin\docParser\backend;
 
-use lx\doc\module\docParser\backend\classes\DocParser;
-use lx\doc\module\docParser\backend\classes\Translater;
+use lx\doc\plugin\docParser\backend\classes\DocParser;
+use lx\doc\plugin\docParser\backend\classes\Translater;
 
 class Respondent extends \lx\Respondent {
 	public function getPackageInfo($packageName) {
-		$parser = new DocParser($packageName);
+		$parser = new DocParser($this->app, $packageName);
 		$parser->run();
 		return $parser->packData();
 	}

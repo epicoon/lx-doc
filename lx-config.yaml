@@ -10,8 +10,8 @@ service:
   router:
     type: map
     routes:
-      parser: {module: docParser}
+      parser: {plugin: docParser}
 
-  modules: module
+  plugins: plugin
   models: model
   modelCrudAdapter: \lx\DbCrudAdapter

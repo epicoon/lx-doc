@@ -2,7 +2,7 @@
 
 ## Service `lx-doc` for lx-platform
 
-It contains the module for application package code documentation visualization.<br>
+It contains the plugin for application package code documentation visualization.<br>
 You can add a route in the application configuration:
 ```yaml
   routes:

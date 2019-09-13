@@ -1,6 +1,6 @@
-class: lx\doc\module\docParser\Module
+class: lx\doc\plugin\docParser\Plugin
 
-view: view/_root.php
+rootSnippet: snippets/_root.js
 
 jsMain: frontend/_main.js
 jsBootstrap: frontend/_bootstrap.js

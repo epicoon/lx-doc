@@ -1,16 +1,18 @@
 /**
- * @const lx.Module Module
+ * @const lx.Plugin Plugin
  * */
 
  #lx:require Viewer;
 
 
-const viewer = new doc.Viewer();
-const classesTreeBox = Module->>classesTree;
-const classBox = Module->>classBox->body;
+const classesTreeBox = Plugin->>classesTree;
+const classBox = Plugin->>classBox;
+classBox.stream({indent: '10px'});
 
-let docData = {};
+
 let selectedClass = null;
+
+const viewer = new doc.Viewer(classBox);
 
 
 function selectClass(className) {
@@ -25,8 +27,6 @@ function reselectClass() {
 	classesTreeBox.renew();
 }
 
-
-classBox.stream({indent: '10px'});
 
 classesTreeBox.setLeaf(function(leaf) {
 	leaf.style('cursor', 'pointer');
@@ -46,10 +46,10 @@ classesTreeBox.setLeaf(function(leaf) {
 
 
 
-Module->>packageNames.on('change', function() {
+Plugin->>packagesName.on('change', function() {
 	var packageName = this.selectedText();
 	^Respondent.getPackageInfo(packageName):(res)=>{
-		docData = res;
+		viewer.docData = res;
 		viewer.makeMainTree(res);
 	};
 });

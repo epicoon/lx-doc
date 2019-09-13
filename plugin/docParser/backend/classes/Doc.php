@@ -1,6 +1,6 @@
 <?php
 
-namespace lx\doc\module\docParser\backend\classes;
+namespace lx\doc\plugin\docParser\backend\classes;
 
 class Doc {
 	private $params;
