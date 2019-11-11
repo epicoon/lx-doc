@@ -8,7 +8,7 @@ use lx\PackageBrowser;
 
 class Plugin extends \lx\Plugin {
 	public function beforeCompile() {
-		$packages = PackageBrowser::getPackagesList();
+		$packages = PackageBrowser::getPackageNamesList();
 		$this->renderParams->packagesName = array_keys($packages);
 	}
 }
