@@ -48,9 +48,9 @@ classesTreeBox.setLeaf(function(leaf) {
 
 Plugin->>packagesName.on('change', function() {
 	var packageName = this.selectedText();
-	^Respondent.getPackageInfo(packageName):(res)=>{
+	^Respondent.getPackageInfo(packageName).then((res)=>{
 		viewer.docData = res;
 		viewer.makeMainTree(res);
-	};
+	});
 });
 
