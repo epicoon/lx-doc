@@ -7,10 +7,8 @@ autoload:
 service:
   class: lx\doc\Service
 
-  router:
-    type: map
-    routes:
-      parser: {plugin: docParser}
+  routes:
+    parser: {plugin: docParser}
 
   plugins: plugin
   models: model

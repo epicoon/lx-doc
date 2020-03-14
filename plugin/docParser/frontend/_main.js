@@ -1,8 +1,9 @@
 /**
- * @const lx.Plugin Plugin
- * */
+ * @const {lx.Plugin} Plugin
+ * @const {lx.Snippet} Snippet
+ */
 
- #lx:require Viewer;
+#lx:require Viewer;
 
 
 const classesTreeBox = Plugin->>classesTree;
@@ -44,7 +45,7 @@ classesTreeBox.setLeaf(function(leaf) {
 	}
 });
 
-
+Plugin->>packagesName.options(Plugin.params.packagesName);
 
 Plugin->>packagesName.on('change', function() {
 	var packageName = this.selectedText();

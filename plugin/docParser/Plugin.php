@@ -7,8 +7,8 @@ namespace lx\doc\plugin\docParser;
 use lx\PackageBrowser;
 
 class Plugin extends \lx\Plugin {
-	public function beforeCompile() {
-		$packages = PackageBrowser::getPackageNamesList();
-		$this->renderParams->packagesName = array_keys($packages);
+	public function init() {
+		$packages = PackageBrowser::getPackagePathesList();
+		$this->params->packagesName = array_keys($packages);
 	}
 }

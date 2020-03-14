@@ -1,8 +1,8 @@
 /**
- * @const lx.Application App
- * @const lx.Plugin Plugin
- * @const lx.Snippet Snippet
- * */
+ * @const {lx.Application} App
+ * @const {lx.Plugin} Plugin
+ * @const {lx.Snippet} Snippet
+ */
 
 #lx:use lx.Input;
 #lx:use lx.Dropbox;
@@ -10,8 +10,6 @@
 #lx:use lx.TreeBox;
 
 Snippet.onload(()=>{#lx:require onclient;});
-
-var packagesName = Plugin.renderParams.packagesName;
 
 var headerHeight = '50px';
 var classesWidth = '320px';
@@ -26,8 +24,7 @@ header.add(lx.TextBox, {
 });
 header.add(lx.Dropbox, {
 	key: 'packagesName',
-	size: ['30%', '60%'],
-	options: packagesName
+	size: ['30%', '60%']
 });
 header.align({
 	horizontal: lx.LEFT,
