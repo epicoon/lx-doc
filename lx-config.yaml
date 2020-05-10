@@ -1,4 +1,4 @@
-name: lx/lx-doc
+name: lx/doc
 
 autoload:
   psr-4:
