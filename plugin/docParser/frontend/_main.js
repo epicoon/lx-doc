@@ -45,7 +45,7 @@ classesTreeBox.setLeaf(function(leaf) {
 	}
 });
 
-Plugin->>packagesName.options(Plugin.params.packagesName);
+Plugin->>packagesName.options(Plugin.attributes.packagesName);
 
 Plugin->>packagesName.on('change', function() {
 	var packageName = this.selectedText();

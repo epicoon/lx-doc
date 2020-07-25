@@ -9,6 +9,6 @@ use lx\PackageBrowser;
 class Plugin extends \lx\Plugin {
 	public function init() {
 		$packages = PackageBrowser::getPackagePathesList();
-		$this->params->packagesName = array_keys($packages);
+		$this->attributes->packagesName = array_keys($packages);
 	}
 }
