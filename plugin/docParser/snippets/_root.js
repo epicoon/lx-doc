@@ -9,7 +9,7 @@
 #lx:use lx.ActiveBox;
 #lx:use lx.TreeBox;
 
-Snippet.onload(()=>{#lx:require onclient;});
+Snippet.onLoad(()=>{#lx:require onclient;});
 
 var headerHeight = '50px';
 var classesWidth = '320px';
