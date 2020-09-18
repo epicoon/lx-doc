@@ -1,5 +1,5 @@
 en-EN:
-  package_documentation: Package documentation: 
+  package_documentation: Package documentation:
   find: Find:
   php_classes: PHP classes
 
@@ -15,7 +15,7 @@ en-EN:
   none: none
 
 ru-RU:
-  package_documentation: Документация пакета: 
+  package_documentation: Документация пакета:
   find: Найти:
   php_classes: PHP классы
 
