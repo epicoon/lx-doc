@@ -6,8 +6,10 @@ namespace lx\doc\plugin\docParser;
 
 use lx\PackageBrowser;
 
-class Plugin extends \lx\Plugin {
-	public function init() {
+class Plugin extends \lx\Plugin
+{
+	public function init(): void
+    {
 		$packages = PackageBrowser::getPackagePathesList();
 		$this->attributes->packagesName = array_keys($packages);
 	}
