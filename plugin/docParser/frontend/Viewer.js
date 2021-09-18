@@ -36,23 +36,23 @@ class Viewer #lx:namespace doc {
 
 		this.createClassInfoBox(data);
 
-		if (!data.interfaces.lxEmpty) {
+		if (!data.interfaces.lxEmpty()) {
 			this.createPartBox('interfaces', #lx:i18n(interfaces));
 		}
 
-		if (!data.traits.lxEmpty) {
+		if (!data.traits.lxEmpty()) {
 			this.createPartBox('traits', #lx:i18n(traits));
 		}
 
-		if (!data.constants.lxEmpty) {
+		if (!data.constants.lxEmpty()) {
 			this.createPartBox('constants', #lx:i18n(constants));
 		}
 
-		if (!data.properties.lxEmpty) {
+		if (!data.properties.lxEmpty()) {
 			this.createPartBox('properties', #lx:i18n(properties), function(){__propertiesToggle(this, data);});
 		}
 
-		if (!data.methods.lxEmpty) {
+		if (!data.methods.lxEmpty()) {
 			this.createPartBox('methods', #lx:i18n(methods), function(){__methodsToggle(this, data);});
 		}
 	}
@@ -157,15 +157,15 @@ function __propertiesToggle(but, data) {
 		var text = '';
 
 		text += '<b>public:</b>';
-		text += data.properties['public'].lxEmpty
+		text += data.properties['public'].lxEmpty()
 			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderProperties('public', data.properties['public']);
 		text += '<br><b>protected:</b>';
-		text += data.properties['protected'].lxEmpty
+		text += data.properties['protected'].lxEmpty()
 			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderProperties('protected', data.properties['protected']);
 		text += '<br><b>private:</b>';
-		text += data.properties['private'].lxEmpty
+		text += data.properties['private'].lxEmpty()
 			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderProperties('private', data.properties['private']);
 
@@ -238,15 +238,15 @@ function __methodsToggle(but, data) {
 		var text = '';
 
 		text += '<b>public:</b>';
-		text += data.methods['public'].lxEmpty
+		text += data.methods['public'].lxEmpty()
 			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderMethods('public', data);
 		text += '<br><b>protected:</b>';
-		text += data.methods['protected'].lxEmpty
+		text += data.methods['protected'].lxEmpty()
 			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderMethods('protected', data);
 		text += '<br><b>private:</b>';
-		text += data.methods['private'].lxEmpty
+		text += data.methods['private'].lxEmpty()
 			? ' ' + #lx:i18n(none) + '<br>'
 			: __renderMethods('private', data);
 
