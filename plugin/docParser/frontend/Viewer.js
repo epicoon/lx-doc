@@ -275,7 +275,7 @@ function __methodsToggle(but, data) {
 			checkHeight();
 		});
 
-		?>.docBut.each((a)=>{
+		?>.docBut.forEach(a=>{
 			// a.click(function() { console.log(this); });
 		});
 
