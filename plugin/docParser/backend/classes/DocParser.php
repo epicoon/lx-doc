@@ -2,15 +2,16 @@
 
 namespace lx\doc\plugin\docParser\backend\classes;
 
-class DocParser {
-	private $app;
+use lx;
+
+class DocParser
+{
 	private $packageName;
 	private $phpClassCodeMap;
 
-	public function __construct($app, $packageName) {
-		$this->app = $app;
+	public function __construct($packageName) {
 		$this->packageName = $packageName;
-		$this->packagePath = $app->getPackagePath($this->packageName);
+		$this->packagePath = lx::$app->getPackagePath($this->packageName);
 
 		$this->phpClassCodeMap = new ClassCodeMap();
 	}
