@@ -1,5 +1,3 @@
-#lx:private;
-
 class Viewer #lx:namespace doc {
 	constructor(classBox) {
 		this.classBox = classBox;
