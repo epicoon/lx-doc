@@ -33,7 +33,7 @@ classesTreeBox.setLeaf(function(leaf) {
 	leaf.style('cursor', 'pointer');
 
 	var node = leaf.node;
-	if (node.empty()) {
+	if (node.isEmpty()) {
 		leaf->label.text(node.key);
 		if (node.key == selectedClass) leaf->label.fill('lightgreen');
 		leaf->label.click(()=>selectClass(node.key));
