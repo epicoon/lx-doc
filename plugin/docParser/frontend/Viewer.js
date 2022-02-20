@@ -116,7 +116,7 @@ class Viewer #lx:namespace doc {
 			parent: box,
 			geom: true,
 			height: '40px',
-			style: {fill: 'lightgray'}
+			style: {backgroundColor: 'lightgray'}
 		});
 
 		var but = new lx.Box({
