@@ -1,4 +1,5 @@
-class Viewer #lx:namespace doc {
+#lx:namespace doc;
+class Viewer {
 	constructor(classBox) {
 		this.classBox = classBox;
 		this.docData = {};
