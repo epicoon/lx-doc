@@ -29,7 +29,7 @@ function reselectClass() {
 }
 
 
-classesTreeBox.setLeaf(function(leaf) {
+classesTreeBox.setLeafRenderer(function(leaf) {
 	leaf.style('cursor', 'pointer');
 
 	var node = leaf.node;
