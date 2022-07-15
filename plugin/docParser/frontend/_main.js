@@ -45,9 +45,9 @@ classesTreeBox.setLeafRenderer(function(leaf) {
 	}
 });
 
-Plugin->>packagesName.options(Plugin.attributes.packagesName);
+Plugin->>servicesName.options(Plugin.attributes.servicesName);
 
-Plugin->>packagesName.on('change', function() {
+Plugin->>servicesName.on('change', function() {
 	var packageName = this.selectedText();
 	^Respondent.getPackageInfo(packageName).then((res)=>{
 		viewer.docData = res;

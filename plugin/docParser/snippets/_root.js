@@ -23,7 +23,7 @@ header.add(lx.TextBox, {
 	text: #lx:i18n(package_documentation)
 });
 header.add(lx.Dropbox, {
-	key: 'packagesName',
+	key: 'servicesName',
 	size: ['30%', '60%']
 });
 header.align({

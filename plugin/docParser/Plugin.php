@@ -2,15 +2,15 @@
 
 namespace lx\doc\plugin\docParser;
 
-//use lx\doc\plugin\docParser\backend\classes\DocParser;
-
-use lx\PackageBrowser;
+use lx\ServiceBrowser;
 
 class Plugin extends \lx\Plugin
 {
 	public function init(): void
     {
-		$packages = PackageBrowser::getPackagePathesList();
-		$this->attributes->packagesName = array_keys($packages);
+        parent::init();
+        
+		$services = ServiceBrowser::getServicePathesList();
+		$this->attributes->servicesName = array_keys($services);
 	}
 }
