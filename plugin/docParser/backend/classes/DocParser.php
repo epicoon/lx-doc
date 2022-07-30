@@ -22,7 +22,7 @@ class DocParser
 
 		$allPhp->each(function($file) {
 			//!!!!!!!!!!!!!!!!!!!
-			// if ($file->getName() != 'Dialog.php') return;
+			// if ($file->getName() != 'HttpRequest.php') return;
 
 			$code = $file->get();
 			preg_match_all('/class (\b.+?\b)[^{]*?{/', $code, $matches);

@@ -1,8 +1,3 @@
-/**
- * @const {lx.Plugin} Plugin
- * @const {lx.Snippet} Snippet
- */
-
 #lx:require Viewer;
 
 
