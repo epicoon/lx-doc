@@ -1,10 +1,23 @@
-class: lx\doc\plugin\docParser\Plugin
+# --- Server ---
+server: lx\doc\plugin\docParser\server\Plugin
+respondents:
+  Respondent: Respondent
 
 rootSnippet: snippets/_root.js
+snippets: snippets
 
-jsMain: frontend/_main.js
+images: assets/images
 
 cacheType: smart
 
-respondents:
-  Respondent: backend\Respondent
+# --- Client ---
+client: client/Plugin.js
+
+require:
+  - '-R assets/css/'
+cssAssets:
+  - lxdoc.css.MainAsset
+
+#core: lxsc.Core
+#guiNodes:
+#  pluginSelector: lxsc.gui.PluginSelector

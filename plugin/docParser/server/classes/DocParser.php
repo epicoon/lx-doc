@@ -1,6 +1,6 @@
 <?php
 
-namespace lx\doc\plugin\docParser\backend\classes;
+namespace lx\doc\plugin\docParser\server\classes;
 
 use lx;
 

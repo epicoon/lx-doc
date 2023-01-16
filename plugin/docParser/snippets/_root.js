@@ -4,57 +4,16 @@
  * @const {lx.Snippet} Snippet
  */
 
-#lx:use lx.Input;
-#lx:use lx.Dropbox;
-#lx:use lx.ActiveBox;
-#lx:use lx.TreeBox;
-
-Snippet.onLoad(()=>{#lx:require onclient;});
-
-var headerHeight = '50px';
-var classesWidth = '320px';
-
-var header = new lx.Box({
-	height: headerHeight
-});
-header.fill('lightgray');
-header.add(lx.TextBox, {
-	key: 'packageDocumentation',
-	text: #lx:i18n(package_documentation)
-});
-header.add(lx.Dropbox, {
-	key: 'servicesName',
-	size: ['30%', '60%']
-});
-header.align({
-	horizontal: lx.LEFT,
-	vertical: lx.MIDDLE,
-	paddingLeft: '20px'
-});
-
-
-var classes = new lx.ActiveBox({
-	key: 'classesBox',
-	top: headerHeight,
-	width: classesWidth,
-	resize: false,
-	adhesive: true
-});
-classes.border({color: 'gray'});
-classes.gridProportional({indent: '10px'});
-classes.begin();
-	(new lx.Box({size:[3, 1], key:'find', text:#lx:i18n(find)})).align(lx.CENTER, lx.MIDDLE);
-	new lx.Input({size:[9, 1], key:'findClass'});
-	new lx.TreeBox({size:[12, 18], key:'classesTree'});
-classes.end();
-
-var classBoxWrapper = new lx.ActiveBox({
-	top: headerHeight,
-	left: classesWidth,
-	resize: false,
-	adhesive: true
-});
-classBoxWrapper.border({color: 'gray'});
-classBoxWrapper.overflow('auto');
-
-classBoxWrapper.add(lx.Box, {key:'classBox'});
+#lx:tpl-begin;
+	<lx.Box:._spread>.gridProportional(indent:'10px')
+		<lx.Box:.lxdoc-box (width:12)>.gridProportional(indent:'10px')
+			<lx.Box:@packageDocumentation.lxdoc-title (width:3)>.align(lx.CENTER, lx.MIDDLE)
+				#lx:i18n(package_documentation)
+			<lx.Dropbox:@servicesName (width:3)>
+		<lx.Box:@classesBox.lxdoc-box (width:3, height:12)>.gridProportional(indent:'10px')
+			<lx.Box:@find (width:3)>.align(lx.CENTER, lx.MIDDLE)
+				#lx:i18n(find)
+			<lx.Input:@findClass (width:9)>
+			<lx.TreeBox:@classesTree (size:[12, 18])>
+		<lx.Box:@classBox.lxdoc-box (width:9, height:12)>
+#lx:tpl-end;

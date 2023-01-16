@@ -1,6 +1,6 @@
 <?php
 
-namespace lx\doc\plugin\docParser;
+namespace lx\doc\plugin\docParser\server;
 
 use lx\ServiceBrowser;
 

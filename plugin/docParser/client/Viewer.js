@@ -1,6 +1,7 @@
-#lx:namespace doc;
+#lx:namespace lxdoc;
 class Viewer {
-	constructor(classBox) {
+	constructor(plugin, classBox) {
+		this.plugin = plugin;
 		this.classBox = classBox;
 		this.docData = {};
 	}
@@ -26,7 +27,7 @@ class Viewer {
 			}
 		}
 
-		Plugin->>classesTree.setData(tree);
+		this.plugin->>classesTree.setTree(tree);
 	}
 
 	showClass(className) {
@@ -62,36 +63,16 @@ class Viewer {
 		});
 		e.border({color: 'gray'});
 
-		// console.log(data);
-
-		/*
-		var text = #lx:render<<<
-			<{lx.data.i18n.i18n_class}>: <<on data.isAbstract:(abstract )>><b={data.name}>
-			<<on data.parentClass:(
-			  \r{lx.data.i18n.i18n_parent_class}: <span.parentClass=({data.parentClass})>
-			)>>
-			<<on data.doc:(
-			  \r<b=({lx.data.i18n.i18n_description}:)>
-			  \r{__replaceRN(data.doc)}
-			)>>
-		>>>
-
-		var text = #lx:render<<<
-			{lx.data.i18n.i18n_class}: <<on data.isAbstract:abstract >><b=({data.name})>
-			<<on data.parentClass:
-				\\lx.data.i18n.i18n_parent_class: <span.parentClass=({data.parentClass})>
-			>>
-			<<on data.doc:
-				\\<b=({lx.data.i18n.i18n_description}:)>
-				\\{__replaceRN(data.doc)}
-			>>
-		>>>
-		*/
-
 		var text = #lx:i18n(class) + ': ';
 		if (data.isAbstract) text += 'abstract ';
 		text += '<b>' + data.name + '</b>';
-		if (data.parentClass) text += '<br>' + #lx:i18n(parent_class) + ': ' + #lx:<span.parentClass=({data.parentClass})>;
+		if (data.parentClass) text += '<br>'
+			+ #lx:i18n(parent_class) + ': '
+			+ (new lx.TagRenderer({
+				tag:'span',
+				classList: ['parentClass'],
+				content: data.parentClass
+			})).toString();
 		if (data.doc) {
 			text += '<br><b>' + #lx:i18n(description) + ':</b>';
 			text += '<br>' + __replaceRN(data.doc);
@@ -102,7 +83,7 @@ class Viewer {
 		e->text.style('line-height', 1.5);
 		e.height( e->text.height('px') + 'px' );
 
-		var parentClass = ?>.parentClass;
+		var parentClass = lx.app.domSelector.getWidgetsByClass('parentClass');
 		if (!parentClass.isEmpty) parentClass.at(0).click(function() { selectClass(this.html()) });
 	}
 
@@ -185,13 +166,13 @@ function __propertiesToggle(but, data) {
 		}
 		checkHeight();
 
-		?>propBox.call('click', function() {
-			var el = ?>#{'prop_doc_' + this.i};
+		lx.app.domSelector.getWidgetsByName('propBox').forEach(box=>box.click(function() {
+			var el = lx.app.domSelector.getWidgetById('prop_doc_' + this.data.i);
 			if (!el) return;
-			el.style('display', this.isClosed ? 'block' : 'none');
-			this.isClosed = !this.isClosed;
+			el.style('display', this.data.isClosed ? 'block' : 'none');
+			this.data.isClosed = !this.data.isClosed;
 			checkHeight();
-		});
+		}));
 
 		but.text('-');
 		but.isClosed = false;
@@ -213,16 +194,29 @@ function __renderProperties(type, list) {
 		var fullName = '';
 		var doc = desc.doc ? desc.doc : null;
 
-		if (desc.isStatic) fullName += #lx:<span.keyWord=(static )>;
+		if (desc.isStatic) fullName += (new lx.TagRenderer({
+			tag: 'span',
+			classList: ['keyWord'],
+			content:'static '
+		})).toString();
 		//todo TYPE
 		fullName += name;
 		if (desc['default'] !== undefined) fullName += ' = ' + desc['default'];
 		var css = iterator % 2 ? 'propName1' : 'propName0';
-		text += #lx:<div.{css}:propBox[i:{type+iterator},isClosed:true]=({fullName})>;
-
+		text += (new lx.TagRenderer({
+			name: 'propBox',
+			classList: [css],
+			data: {i: type + iterator, isClosed: true},
+			content: fullName
+		})).toString();
 		if (doc) {
 			var css = iterator % 2 ? 'propDoc1' : 'propDoc0';
-			text += #lx:<div.{css}"display:none"#{'prop_doc_'+type+iterator}=({__replaceRN(doc)})>;
+			text += (new lx.TagRenderer({
+				id: 'prop_doc_' + type + iterator,
+				classList: [css],
+				style: {display: 'none'},
+				content: __replaceRN(doc)
+			})).toString();
 		}
 
 		iterator++;
@@ -266,15 +260,15 @@ function __methodsToggle(but, data) {
 		}
 		checkHeight();
 
-		?>methodBox.call('click', function() {
-			var el = ?>#{'method_doc_' + this.i};
+		lx.app.domSelector.getWidgetsByName('methodBox').forEach(box=>box.click(function() {
+			var el = lx.app.domSelector.getWidgetById('method_doc_' + this.data.i);
 			if (!el) return;
-			el.style('display', this.isClosed ? 'block' : 'none');
-			this.isClosed = !this.isClosed;
+			el.style('display', this.data.isClosed ? 'block' : 'none');
+			this.data.isClosed = !this.data.isClosed;
 			checkHeight();
-		});
+		}));
 
-		?>.docBut.forEach(a=>{
+		lx.app.domSelector.getWidgetsByClass('docBut').forEach(a=>{
 			// a.click(function() { console.log(this); });
 		});
 
@@ -300,7 +294,11 @@ function __renderMethods(type, data) {
 		var doc = desc.doc ? desc.doc : null;
 
 		if (desc.isAbstract) fullName += 'abstract ';
-		if (desc.isStatic) fullName += #lx:<span.keyWord=(static )>;
+		if (desc.isStatic) fullName += (new lx.TagRenderer({
+			tag: 'span',
+			classList: ['keyWord'],
+			content: 'static '
+		})).toString();
 		fullName += name;
 		if (desc.parameters) {
 			var paramArr = [];
@@ -316,18 +314,31 @@ function __renderMethods(type, data) {
 		} else fullName += '()';
 
 		var css = iterator % 2 ? 'propName1' : 'propName0';
-		text += doc
-			? #lx:<div:methodBox.{css}.pointed[i:{type+iterator},isClosed:true]
-				    <span=({fullName})>
-				    <div.docBut[class:{data.name},method:{name}]=(Doc)>
-			      >
-			: #lx:<div.{css}:methodBox[i:{type+iterator},isClosed:true]
-				    <span=({fullName})>
-			      >
+		if (doc) {
+			text += lx.TagRenderer.renderHtml(()=>{
+				#lx:tpl-begin;
+					<div:[name:methodBox].pointed.{{css}} {i:type+iterator, isClosed:true}>
+						<span>{{fullName}}
+						<div:.docBut {class:data.name, method:name}>Doc
+				#lx:tpl-end;
+			});
+		} else {
+			text += lx.TagRenderer.renderHtml(()=>{
+				#lx:tpl-begin;
+					<div:[name:methodBox].{{css}} {i:type+iterator, isClosed:true}>
+						<span>{{fullName}}
+				#lx:tpl-end;
+			});
+		}
 
 		if (doc) {
 			var css = iterator % 2 ? 'propDoc1' : 'propDoc0';
-			text += #lx:<div#{'method_doc_'+type+iterator}.{css}"display:none"=({__replaceRN(doc)})>;
+			text += (new lx.TagRenderer({
+				id: 'method_doc_' + type + iterator,
+				classList: [css],
+				style: {display: 'none'},
+				content: __replaceRN(doc)
+			})).toString();
 		}
 
 		iterator++;
