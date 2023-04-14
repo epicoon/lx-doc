@@ -18,7 +18,7 @@ class DocParser
 
 	public function run() {
 		$dir = new \lx\Directory($this->packagePath);
-		$allPhp = $dir->getAllFiles('*.php');
+		$allPhp = $dir->getAllFiles(['mask' => '*.php']);
 
 		$allPhp->each(function($file) {
 			//!!!!!!!!!!!!!!!!!!!
