@@ -84,7 +84,7 @@ class Viewer {
 		e.height( e->text.height('px') + 'px' );
 
 		var parentClass = lx.app.domSelector.getWidgetsByClass('parentClass');
-		if (!parentClass.isEmpty) parentClass.at(0).click(function() { selectClass(this.html()) });
+		if (!parentClass.isEmpty()) parentClass.at(0).click(function() { selectClass(this.html()) });
 	}
 
 	/**
